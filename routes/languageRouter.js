@@ -1,30 +1,14 @@
 const express = require('express');
-const languages = require('../models/languages');
 const router = express.Router();
+const languageController = require('../controllers/languageController')
 
 //languages title, description
-router.get('/',async(req,res)=>{
-    res.send(await languages.find())
-})
+router.get('/', languageController.GET)
 
-router.post('/',async (req,res)=>{
-    const {title, description} = req.body;
-    const setLanguage = new languages({title , description});
-    await setLanguage.save();
-    res.json("Language Succesfully Added!")
-})
+router.post('/', languageController.POST)
 
-router.put("/:id", async(req,res)=>{
-    const languageID = req.params.id;
-    const update  = req.body;
-    languages.findByIdAndUpdate(languageID, update, (err, languageUpdated)=>{
-        err ? res.json("Error") : res.status(200).send({skill: languageUpdated});
-    })
-})
+router.put("/:id", languageController.PUT)
 
-router.delete("/:id",async (req,res)=>{
-    const deleteLanguage = await languages.findOneAndDelete({id : req.params.id});
-    deleteLanguage ? res.json("OK"):res.json("Error");
-})
+router.delete("/:id", languageController.DELETE)
 
 module.exports = router;

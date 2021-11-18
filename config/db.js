@@ -1,3 +1,4 @@
 const mongoose = require('mongoose');
-const uri  = "mongodb://localhost/apiRESTTutorial";
+require('dotenv').config();
+const uri  = process.env.DB;
 mongoose.connect(uri).catch(e => console.log(e));

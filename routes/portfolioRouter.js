@@ -1,30 +1,13 @@
 const express = require('express');
-const portfolio = require('../models/portfolio')
 const router = express.Router();
-
+const portfolioController = require('../controllers/portfolioController')
 //portfolio title, description
-router.get('/',async(req,res)=>{
-    res.send(await portfolio.find())
-})
+router.get('/', portfolioController.GET)
 
-router.post('/',async (req,res)=>{
-    const {title, description} = req.body;
-    const setPortfolio = new portfolio({title , description});
-    await setPortfolio.save();
-    res.json("Portfolio Succesfully Setted!")
-})
+router.post('/', portfolioController.POST)
 
-router.put("/:id", async(req,res)=>{
-    const skillID = req.params.id;
-    const update  = req.body;
-    skill.findByIdAndUpdate(skillID, update, (err, skillUpdated)=>{
-        err ? res.json("Error") : res.status(200).send({skill: skillUpdated});
-    })
-})
+router.put("/:id", portfolioController.PUT)
 
-router.delete("/:id",async (req,res)=>{
-    const deletedSkill = await skill.findOneAndDelete({id : req.params.id});
-    deletedSkill ? res.json("OK"):res.json("Error");
-})
+router.delete("/:id", portfolioController.DELETE)
 
 module.exports = router;
